@@ -36,8 +36,8 @@ data/flowines.csv - the file name of the output .csv file containing all generat
 
 ![Small Scale Outputs](images/small_scale_outputs.png)
 
-Above, a small-scale set of output images for a tiny region on Pendleton Marine Corps Base. Left, the horizontal distance to the nearest 1st-order flowline. Right, the vertical distance to the nearest 3rd-order flowline.
+Above, a small-scale set of output images for a tiny region on Pendleton Marine Corps Base. Left, the horizontal distance to the nearest 1st-order flowline. Right, the vertical distance to the nearest 3rd-order flowline. Streamlines are shown in red.
 
 ![Large Scale Outputs](images/large_scale_outputs.png)
 
-Below, a much larger-scale set of outputs showing the entirety of Pendleton Marine Corps Corps Base, with the Santa Margarita River at bottom. Top left: DEM (0 to 880 m); Top right: Strahler Order of nearest flowline (1 to 8); Bottom Left: vertical distance to nearest flowline of order at least 3 (thresholded 0-30 m); Bottom Right: horizontal distance to nearest flowline of order at least 3 (thresholded 0-300 m).
+Below, a much larger-scale set of outputs showing the entirety of Pendleton Marine Corps Corps Base, with the Santa Margarita River at bottom. Top left: DEM (0 to 880 m); Top right: Strahler Order of nearest flowline (1 to 8); Bottom Left: vertical distance to nearest flowline of order at least 3 (thresholded 0-30 m); Bottom Right: horizontal distance to nearest flowline of order at least 3 (thresholded 0-300 m). Streamlines are shown in red, again thresholded not to include flowlines of order lower than 3.
