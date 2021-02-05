@@ -26,12 +26,12 @@ if ( NOT Boost_FOUND )
 endif()
 
 # PROJ 
-find_package(PROJ)
-include_directories(${PROJ_INCLUDE_DIRS})
+find_package(GDAL REQUIRED)
+
 
 
 add_executable(flow_dist_extraction src/flow_dist_extraction.cpp)
-target_link_libraries(flow_dist_extraction ${PCL_LIBRARIES} gdal ${CGAL_LIBRARIES} ${PROJ_LIBRARIES} point_cloud_rasterizer las_classifier las_surfacing)
+target_link_libraries(flow_dist_extraction ${PCL_LIBRARIES} gdal ${CGAL_LIBRARIES})
 
 
 
