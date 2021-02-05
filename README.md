@@ -36,7 +36,7 @@ data/flowines.csv - the file name of the output .csv file containing all generat
 
 ![Small Scale Outputs](images/small_scale_outputs.png)
 
-Above, a small-scale set of output images for a tiny region on Pendleton Marine Corps Base. Left, the horizontal distance to the nearest 1st-order flowline. Right, the vertical distance to the nearest 3rd-order flowline.
+Above, a small-scale set of output images for a tiny region on Pendleton Marine Corps Base. Left, the horizontal distance to the nearest 1st-order flowline. Right, the vertical distance to the nearest 3rd-order flowline. Streamlines are shown in red.
 
 ![Large Scale Outputs](images/large_scale_outputs.png)
 
