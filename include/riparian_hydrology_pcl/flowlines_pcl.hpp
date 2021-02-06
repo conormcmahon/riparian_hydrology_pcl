@@ -107,6 +107,24 @@ ChannelPointType FlowlinesPCL<ChannelPointType>::convertOGRPointToPCL(const OGRF
     point_pcl.x = point_ogr.getX();
     point_pcl.y = point_ogr.getY();
     point_pcl.z = 0;
+    // If requested, reproject point coordinates between two EPSG bases
+    if(settings.EPSG_in_ > 0 && settings.EPSG_reproj_ > 0)
+    {
+        OGRSpatialReference in_SRS;
+        in_SRS.importFromEPSG(settings.EPSG_in_);
+        OGRSpatialReference out_SRS;
+        out_SRS.importFromEPSG(settings.EPSG_reproj_);
+        OGRCoordinateTransformation *transformer = OGRCreateCoordinateTransformation(&in_SRS, &out_SRS);
+
+        // Get reprojected XYZ coordinates
+        double x = point_pcl.x;
+        double y = point_pcl.y;
+        double z = point_pcl.z;
+        transformer->Transform(1, &x, &y, &z);
+        point_pcl.x = x;
+        point_pcl.y = y;
+        point_pcl.z = z;
+    }
     // If the point type includes fields for it, and if we have the field names generated, fill in the stream order and stream name fields        
     if(shp_order_index > -1)
         if(pcl::checkFieldType<ChannelPointType, int>(settings.pcl_order_field_))
@@ -146,6 +164,35 @@ void FlowlinesPCL<ChannelPointType>::writeFlowlinesCloud(std::string filename, b
     pcl::PCDWriter writer;
     writer.write<ChannelPointType>(filename, *flowlines_, binary);
     std::cout << "  File saved." << std::endl;
+}
+
+// Population Flowlines point cloud Z values from a TIN
+template <typename ChannelPointType>
+template <typename TINType>
+void FlowlinesPCL<ChannelPointType>::populateHeightFromTIN(const TINType &TIN)
+{
+    for(int i=0; i<flowlines_->points.size(); i++)
+    {
+        flowlines_->points[i].z = TIN.interpolateTIN(flowlines_->points[i]);
+    }
+}
+
+template <typename ChannelPointType>
+template <typename TargetPointType>
+Eigen::Vector2f FlowlinesPCL<ChannelPointType>::getPointDistance(TargetPointType target_point)
+{
+    // Convert point type for KD Tree Search
+    ChannelPointType target_point_channel = pcl::copyPoint3D<TargetPointType, ChannelPointType>(target_point);
+    // Get closest neighbor in stream network to target point
+    std::vector<int> nearest_ind;
+    std::vector<float> dist_squared;
+    flowlines_search_tree_->nearestKSearch(target_point_channel, 1, nearest_ind, dist_squared);
+    // Get vertical and horizontal distance between points 
+    Eigen::Vector2f stream_dist;
+    stream_dist << pcl::pointDistance2D(target_point_channel, flowlines_->points[nearest_ind[0]]),
+                   target_point_channel.z - flowlines_->points[nearest_ind[0]].z;
+
+    return stream_dist;
 }
 
 

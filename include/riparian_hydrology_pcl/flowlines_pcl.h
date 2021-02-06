@@ -28,6 +28,9 @@ struct OGRFlowlinesSettings
     std::string pcl_name_field_;
     // Sampling Information
     float linear_point_density_;
+    // CRS Reprojection (optional)
+    int EPSG_in_;
+    int EPSG_reproj_;
 };
 
 
@@ -48,6 +51,10 @@ public:
     void writeFlowlinesCloud(std::string filename, bool binary=true);
     TreeC getSearchTree();
     CC getFlowlinesCloudCopy();
+    template <typename TINType>
+    void populateHeightFromTIN(const TINType &TIN);
+    template <typename TargetPointType>
+    Eigen::Vector2f getPointDistance(TargetPointType target_point);
 
 private:
     CCP flowlines_;

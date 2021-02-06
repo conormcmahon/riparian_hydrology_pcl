@@ -16,7 +16,25 @@ int main(int argc, char *argv[])
     settings.pcl_order_field_ = "stream_order";
     settings.linear_point_density_ = 1;
 
+    // Generate XY values from Shapefile Flow Network
     flowline_generator.loadFromSHP(settings);
+
+    // Generate Z values by interpolating DEM TIN
+    LAS_TIN<pcl::PointChannel> TIN;
+    std::string TIN_filename = "/mnt/d/serdp/data/pendleton/LiDAR/hydrology/raw_point_clouds/output/62152035_ground_filtered.pcd";
+    pcl::PointCloud<pcl::PointChannel>::Ptr DEM_cloud(new pcl::PointCloud<pcl::PointChannel>);
+    // Load input cloud
+    if (pcl::io::loadPCDFile<pcl::PointChannel> (TIN_filename, *DEM_cloud) == -1) //* load the file
+    {
+        std::cout << "Couldn't read file " << TIN_filename << std::endl;
+    }
+    else 
+        std::cout << "Read an input cloud with size " << DEM_cloud->points.size() << std::endl;
+    TIN.setInputCloud(DEM_cloud);
+    TIN.generateTIN();
+    flowline_generator.populateHeightFromTIN(TIN);
+
+
     flowline_generator.writeFlowlinesCloud("/mnt/d/serdp/data/pendleton/LiDAR/hydrology/flowlines/flowlines_santa_margarita_lower.pcd");
 
 } 
