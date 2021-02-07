@@ -240,5 +240,24 @@ int FlowlinesPCL<ChannelPointType>::getFieldIndexByName(std::string field_name, 
 }
 
 
+template <typename ChannelPointType>
+void FlowlinesPCL<ChannelPointType>::loadFromPCD(std::string filename, float distance_threshold=-999)
+{
+    // Load input cloud
+    if (pcl::io::loadPCDFile<PointType> (filename, *cloud_) == -1) //* load the file
+    {
+        std::cout << "Couldn't read file " << filename << std::endl;
+        return;
+    }
+    else 
+        std::cout << "Read an input cloud with size " << cloud_->points.size() << std::endl;
+}
+
+template <typename ChannelPointType>
+void FlowlinesPCL<ChannelPointType>::loadFromCloud(CCP cloud)
+{
+
+}
+
 
 #endif //FLOWLINES_PCL_HPP_
