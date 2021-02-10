@@ -170,7 +170,11 @@ void FlowlinesPCL<ChannelPointType>::getSearchTree(TreeCP tree)
 template <typename ChannelPointType>
 void FlowlinesPCL<ChannelPointType>::getFlowlinesCloudCopy(CCP cloud)
 {
-    cloud = std::make_shared<CC>(*flowlines_);
+    cloud->points.clear();
+    for(int i=0; i<flowlines_->points.size(); i++)
+        cloud->points.push_back(flowlines_->points[i]);
+    cloud->height = 1;
+    cloud->width = cloud->points.size();
 }
 
 

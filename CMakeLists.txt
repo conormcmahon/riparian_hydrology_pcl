@@ -33,9 +33,12 @@ find_package(GDAL REQUIRED)
 add_executable(flow_dist_extraction src/flow_dist_extraction.cpp)
 target_link_libraries(flow_dist_extraction ${PCL_LIBRARIES} gdal ${CGAL_LIBRARIES})
 
+add_executable(flowline_height_from_TIN src/flowline_height_from_TIN.cpp)
+target_link_libraries(flowline_height_from_TIN ${PCL_LIBRARIES} gdal ${CGAL_LIBRARIES})
 
 
-install(TARGETS flow_dist_extraction
+
+install(TARGETS flow_dist_extraction flowline_height_from_TIN
         DESTINATION lib)
 install(DIRECTORY include/${PROJECT_NAME}
         DESTINATION include
