@@ -12,6 +12,15 @@ int main(int argc, char *argv[])
     settings.shp_order_field_ = "StrmOrd";
     settings.filter_by_order_ = true;
     settings.filter_by_name_ = false;
+    settings.filter_by_ID_ = false;
+    settings.filter_by_ID_ = true;
+    settings.shp_ID_field_ = "NHDPlID";
+    settings.bad_IDs_.push_back(50000100186500.000000000000000);
+    settings.bad_IDs_.push_back(50000100098508.000000000000000);
+    settings.bad_IDs_.push_back(50000100098507.000000000000000);
+    settings.bad_IDs_.push_back(50000100016361.000000000000000);
+    settings.bad_IDs_.push_back(50000100158070.000000000000000);
+    settings.bad_IDs_.push_back(50000100125110.000000000000000);
     settings.channel_order_threshold_ = 3;
     settings.pcl_order_field_ = "stream_order";
     settings.linear_point_density_ = 1;
